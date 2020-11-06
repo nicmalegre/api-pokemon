@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react'; //Import the hook
 import PokemonCard from './components/pokemonCard'
 import axios from 'axios' //Import axios for GET the data from the API
 
-
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 
 
@@ -42,7 +43,7 @@ function App() {
     setPokemon(pokemonData.map( p => {
       return p
     }))
-
+    console.log(pokemon)
   }
 
   useEffect(() => {
@@ -51,9 +52,17 @@ function App() {
 
 
   return (
-    <>
-    <PokemonCard pokemon={pokemon}/>
-    </>
+    <Container maxWidth="md">
+      <Grid container>
+            {pokemon.map( p => (
+                <Grid item xs={4}>
+                  <Grid container justify="center">
+                    <PokemonCard pokemon={p}/>
+                  </Grid>
+                </Grid>
+            ))}
+      </Grid>
+    </Container>
   );
 }
 
