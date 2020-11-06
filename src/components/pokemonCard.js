@@ -2,17 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 
 
 
+
 const PokemonCard = (props) => {
     return ( 
-        <div>
-            {props.pokemon.map( p => (
-                <>
-                <p key={p.data.name}>Name: {p.data.name}</p>
-                <p key={p.data.name}>Height: {p.data.height}</p>
-                <p key={p.data.name}>Weight: {p.data.weight}</p>
-                </>
-            ))}
-        </div>
+        <>
+        <img src={props.pokemon.data.sprites.front_default} alt=''/>
+        <img src={props.pokemon.data.sprites.back_default} alt=''/>
+        <p key={props.pokemon.data.name}>Name: {props.pokemon.data.name}</p>
+        <p key={props.pokemon.data.height}>Height: {props.pokemon.data.height}</p>
+        <p key={props.pokemon.data.weight}>Weight: {props.pokemon.data.weight}</p>
+        </>
+
   );
 }
  
