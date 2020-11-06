@@ -15,8 +15,11 @@ import { green } from '@material-ui/core/colors';
 /* STYLES FOR THE CARD IMPORT FROM MATERIAL-UI */
 const useStyles = makeStyles({
     root: {
-      maxWidth: 300,
+      maxWidth: 320,
+      minWidth:300,
       display: 'inline-block',
+      margin: 15,
+      padding: 15,
       
     },
     media: {
@@ -31,37 +34,24 @@ const PokemonCard = (props) => {
 
     return ( 
         <>
-        {/* <img src={props.pokemon.data.sprites.front_default} alt=''/>
-        <img src={props.pokemon.data.sprites.back_default} alt=''/>
-        <p key={props.pokemon.data.name}>Name: {props.pokemon.data.name}</p>
-        <p key={props.pokemon.data.height}>Height: {props.pokemon.data.height}</p>
-        <p key={props.pokemon.data.weight}>Weight: {props.pokemon.data.weight}</p> */}
-
         <Card className={classes.root}>
-            <CardActionArea>
-                <CardMedia
-                className={classes.media}
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="Contemplative Reptile"
-                />
-                <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    Lizard
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                Share
-                </Button>
-                <Button size="small" color="primary">
-                Learn More
-                </Button>
-            </CardActions>
+            <div style={{textAlign: 'center'}}>
+                <img height='120px' src={props.pokemon.data.sprites.front_default} alt=''/>
+                <img height='120px' src={props.pokemon.data.sprites.back_default} alt=''/>
+            </div>
+            <p key={props.pokemon.data.name}><b>Name:</b> {props.pokemon.data.name}</p>
+            <p key={props.pokemon.data.height}><b>Height:</b> {props.pokemon.data.height}</p>
+            <p key={props.pokemon.data.weight}><b>Weight:</b> {props.pokemon.data.weight}</p>
+            <p key={props.pokemon.data.base_experience}><b>Base Experience:</b> {props.pokemon.data.base_experience}</p>
+            <p><b>Abilities: </b>
+                <ul>
+                    {props.pokemon.data.abilities.map(a =>{ 
+                        return (
+                            <li key={a.ability.name}>{a.ability.name}</li>
+                        )
+                    })}
+                </ul>
+            </p> 
         </Card> 
         </>
 

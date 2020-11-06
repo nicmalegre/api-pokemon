@@ -43,7 +43,6 @@ function App() {
     setPokemon(pokemonData.map( p => {
       return p
     }))
-    console.log(pokemon)
   }
 
   useEffect(() => {
@@ -52,11 +51,14 @@ function App() {
 
 
   return (
-    <Container maxWidth="md">
+    <Container>
       <Grid container justify="center">
-            {pokemon.map( p => (
-                    <PokemonCard pokemon={p}/>
-            ))}
+        <Grid item xs={12}>
+          
+        </Grid>
+        {pokemon.map( p => (
+          <PokemonCard pokemon={p}/>
+        ))}
       </Grid>
     </Container>
   );
