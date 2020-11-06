@@ -53,13 +53,9 @@ function App() {
 
   return (
     <Container maxWidth="md">
-      <Grid container>
+      <Grid container justify="center">
             {pokemon.map( p => (
-                <Grid item xs={4}>
-                  <Grid container justify="center">
                     <PokemonCard pokemon={p}/>
-                  </Grid>
-                </Grid>
             ))}
       </Grid>
     </Container>
