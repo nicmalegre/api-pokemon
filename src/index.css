@@ -5,9 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color:#f6f6f6;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#a-name{
+  font-weight: light !important;
+}
+
+#a-href{
+  font-weight: light;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+#a-href:hover{
+  background-color: #636fb4;
+  
+}
+
