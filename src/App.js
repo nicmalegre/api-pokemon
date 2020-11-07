@@ -98,7 +98,6 @@ function App() {
     setLoading(true)
 
     try{
-      console.log(search)
       let {data} = await axios.get('https://pokeapi.co/api/v2/pokemon', {
         params: {
           limit: ( ((search === "") || (search === null)) ? limite : count ) , //quantity of pokemon to fetch
