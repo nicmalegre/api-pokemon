@@ -16,7 +16,7 @@ const Title = () => {
 
   return ( 
     <div className={classes.root}>
-        <AppBar position="static" style={{backgroundColor:"#5B91F5"}}>
+        <AppBar position="static" style={{backgroundColor:"#3f51b5"}}>
           <Container justify='center'>
             <Toolbar style={{padding:0}}>
                     <h1 style={{fontSize: '40px'}}>Pokemon Finder</h1>
