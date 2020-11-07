@@ -111,6 +111,11 @@ function App() {
       }else{
         arrayResults = data.results.filter(controlNamePokemon)
       }
+
+      if (arrayResults.length > limit){
+        arrayResults = arrayResults.slice(0,limit)
+        console.log(arrayResults)
+      }
       
       let pokemonData = await Promise.all(arrayResults.map( async p =>{
         let pokemonRecord = await getPokemon(p.url);
