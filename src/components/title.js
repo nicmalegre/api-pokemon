@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 
+import src from '../static/img/nicolasalegre.jpg'
+
+
 
 //ESTO SE UTILIZA PARA DARLE ESTILO A LA NAVBAR
 const useStyles = makeStyles((theme) => ({
@@ -17,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
     title: {
       flexGrow: 1,
     },
-    [theme.breakpoints.down('sm')]:{
-      textoFormularios: {display:'none'}
-    },
     avatar: {
         display: 'flex',
         '& > *': {
             margin: theme.spacing(1),
         },
+    },
+    [theme.breakpoints.down('sm')]:{
+      avatar: {display:'none'}
     },
   }));
 
@@ -40,12 +43,14 @@ const Title = () => {
                 <h1 style={{fontSize: '40px'}}>Pokemon Finder</h1>
                 <Typography variant="h6" className={classes.title}>
                 </Typography>
-                <div className={classes.avatar}>
-                    <Avatar alt="Nicolas Alegre" src="https://drive.google.com/drive/u/1/folders/1ykdd-zPzemDhsDhxq00NGl5U2dDUBC0E" />
-                </div>
+                
                 <div>
-                    <p><u>Author:</u> Nicolás Alegre</p>
-                    <p>See more in : <a href='https://github.com/nicmalegre/api-pokemon' style={{color: 'white !important'}}> Repo</a></p>
+                    <a><b>Author:</b></a><br/>
+                    <a id='a-name'>Nicolás Alegre</a><br/>
+                    <a id='a-href' href='https://github.com/nicmalegre/api-pokemon'>Link to GitHub</a>
+                </div>
+                <div className={classes.avatar}>
+                    <Avatar id="avatar" style={{height: '70px', width: '70px'}} alt="Nicolas Alegre" src={src} />
                 </div>
             </Toolbar>
           </Container>
