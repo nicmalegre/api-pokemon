@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'; //Import the hook
-import PokemonCard from './components/pokemonCard'
-import Title from './components/title'
+import PokemonCard from './components/PokemonCard'
+import Title from './components/Title'
 import axios from 'axios' //Import axios for GET the data from the API
 
 /* IMPORT FROM MATERIAL-UI */
