@@ -14,31 +14,28 @@ import Grid from '@material-ui/core/Grid';
 const {getAllPokemons} = require('../api/pokemonApi')
 
 
-
-
 const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
     const [search, setSearch] = useState(null) //State for save the user input
 
-    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //Use react-query for get all the pokemons
 
-    //Function for filter the name of the pokemons
+    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //GET ALL THE POKEMONS
+
+    
+
+
     const controlNamePokemon = (pokemon) =>{
         return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
     }
     
-    //Function to control the chanfe of the input search
     const handleChangeInput = (event) =>{
         setSearch(event.target.value)
     }
 
-    //Function to control the select change
     const handleChangeSelect = (event) => {
         setLimit(event.target.value);
         /* filterItems() */
     };
     
-    //Function to control when the user click on search
-    //Filter the names and then, get the data of every pokemon
     let arrayResults = []
     const filterItems = async () =>{
         if(status ==="success"){
@@ -101,8 +98,6 @@ const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
                 <MenuItem value={count}>All</MenuItem>
               </Select>
             </FormControl>
-            {console.log(status)}
-            {(status === 'loading') && (<h1>Loading ...</h1>)}
         </Grid>
     )
 
