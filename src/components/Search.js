@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 
 import axios from 'axios'
 
+import {useQuery} from 'react-query'
+
 //Import from Material-ui
 import { FormControl, Select} from '@material-ui/core/';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,62 +11,59 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+const {getAllPokemons} = require('../api/pokemonApi')
+
+
 
 
 const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
     const [search, setSearch] = useState(null) //State for save the user input
 
+    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //Use react-query for get all the pokemons
+
+    //Function for filter the name of the pokemons
+    const controlNamePokemon = (pokemon) =>{
+        return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
+    }
+    
+    //Function to control the chanfe of the input search
     const handleChangeInput = (event) =>{
         setSearch(event.target.value)
-      }
+    }
 
+    //Function to control the select change
     const handleChangeSelect = (event) => {
         setLimit(event.target.value);
-        filterItems(event.target.value)
-      };
-
-      const controlNamePokemon = (pokemon) =>{
-        return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
-      }
-
-      const filterItems = async (limite) =>{
-        setLoading(true)
+        /* filterItems() */
+    };
     
-        try{
-          let {data} = await axios.get('https://pokeapi.co/api/v2/pokemon', {
-            params: {
-              limit: ( ((search === "") || (search === null)) ? limite : count ) , //quantity of pokemon to fetch
-              offset: 0 //quantity of pokemon to skip
+    //Function to control when the user click on search
+    //Filter the names and then, get the data of every pokemon
+    let arrayResults = []
+    const filterItems = async () =>{
+        if(status ==="success"){
+            if((search === "")||(search === null)){
+                arrayResults = data.results
+            }else{
+                arrayResults = data.results.filter(controlNamePokemon)
             }
-          })
-          
-          let arrayResults
-          if((search === "") || (search === null)){
-            arrayResults = data.results
-          }else{
-            arrayResults = data.results.filter(controlNamePokemon)
-          }
-    
-          if (arrayResults.length > limit){
-            arrayResults = arrayResults.slice(0,limit)
-            console.log(arrayResults)
-          }
-          
-          let pokemonData = await Promise.all(arrayResults.map( async p =>{
-            let pokemonRecord = await axios.get(p.url);
-            return pokemonRecord
-          }))
-          
-          setPokemon(pokemonData.map( p => {
-            return p
-          }))
-    
-          setLoading(false)
-        } 
-        catch (error){
-          console.log(error)
-        } 
-      }
+
+            if (arrayResults.length > limit){
+                arrayResults = arrayResults.slice(0,limit)
+                console.log(arrayResults)
+            }
+
+            let pokemonData = await Promise.all(arrayResults.map( async p =>{
+                let pokemonRecord = await axios.get(p.url);
+                return pokemonRecord
+            }))
+            
+            setPokemon(pokemonData.map( p => {
+                return p
+            }))
+        }
+        
+    }
 
     return (
         <Grid item xs={12} style={{marginBottom: 40}}>
@@ -98,11 +97,12 @@ const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
                 <MenuItem value={200}>200</MenuItem>
                 <MenuItem value={500}>500</MenuItem>
                 <MenuItem value={750}>750</MenuItem>
-                <MenuItem value={750}>750</MenuItem>
                 <MenuItem value={1000}>1000</MenuItem>
                 <MenuItem value={count}>All</MenuItem>
               </Select>
             </FormControl>
+            {console.log(status)}
+            {(status === 'loading') && (<h1>Loading ...</h1>)}
         </Grid>
     )
 
