@@ -1,9 +1,6 @@
 import React, {useState} from 'react'; //Import the hook
-import Title from './components/Title'
-import Search from './components/Search'
-import PokemonCard from './components/PokemonCard'
-import Loading from './components/Loading'
-import Error from './components/Error'
+import {Title, Search, PokemonCard, Loading, Error} from './components/'
+
 
 import axios from 'axios' //Import axios for GET the data from the API
 
@@ -15,9 +12,6 @@ import Grid from '@material-ui/core/Grid';
 
 //Import getAllPokemons method from api
 const {getAllPokemons} = require('./api/pokemonApi')
-
-
-
 
 const  App = () => {
   const [search, setSearch] = useState('') //State for save the search user input

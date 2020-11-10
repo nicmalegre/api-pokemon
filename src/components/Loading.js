@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Loading = ({loading}) => {
+export const Loading = ({loading}) => {
     const classes = useStyles(); //This is for the material-ui styles 
 
     return(
@@ -31,5 +31,3 @@ const Loading = ({loading}) => {
 
 }
 
-
-export default Loading

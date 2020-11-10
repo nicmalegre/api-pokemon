@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 
-const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
+export const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
 
     //Save the input state in the search state
     const handleChangeInput = (event) =>{
@@ -58,5 +58,3 @@ const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
 
 
 }
-
-export default Search;

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Title = () => {
+export const Title = () => {
   const classes = useStyles();  
 
   return ( 
@@ -60,4 +60,3 @@ const Title = () => {
   )
 }
 
-export default(Title);

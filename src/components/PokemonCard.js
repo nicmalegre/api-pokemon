@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   });
 
 
-const PokemonCard = (props) => {
+export const PokemonCard = (props) => {
     
     const classes = useStyles(); //We need to declare this in order to use 
 
@@ -51,4 +51,3 @@ const PokemonCard = (props) => {
   );
 }
  
-export default PokemonCard;
