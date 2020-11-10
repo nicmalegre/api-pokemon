@@ -22,7 +22,7 @@ export const Loading = ({loading}) => {
         <>
         {/* This component will display when the API is loading */}
             <Backdrop className={classes.backdrop} open={loading}>
-            <CircularProgress color="inherit" />
+                <CircularProgress color="inherit" />
             </Backdrop>
         {/* End Backdrop */}
         </>
