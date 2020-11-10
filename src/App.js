@@ -36,7 +36,6 @@ const  App = () => {
     if(count !== data.count){
       setCount(data.count)
     }
-    console.log(count)
 
     if(search !== ""){ //If the input is empty, we have to search in all the api
       arrayResults = data.results.filter(controlNamePokemon) //If not empty, we apply the filter
@@ -63,7 +62,7 @@ const  App = () => {
   const onError = (error) =>{
     console.log(error)
   }
-  const {data, status, error, isLoading, refetch} = useQuery(['getAllPokemons', count, search], getAllPokemons, {onSuccess, onError}) //Use react-query for get all the pokemons
+  const {status, isLoading, refetch} = useQuery(['getAllPokemons', count, search, limit], getAllPokemons, {onSuccess, onError}) //Use react-query for get all the pokemons
 
 
   return (

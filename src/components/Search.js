@@ -1,8 +1,4 @@
-import React, {useState} from 'react'
-
-import axios from 'axios'
-
-import {useQuery} from 'react-query'
+import React from 'react'
 
 //Import from Material-ui
 import { FormControl, Select} from '@material-ui/core/';
@@ -11,14 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-//Import getAllPokemons method from api
-const {getAllPokemons} = require('../api/pokemonApi')
-
-
-
 
 const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
-    
+
     //Save the input state in the search state
     const handleChangeInput = (event) =>{
         setSearch(event.target.value)
@@ -29,7 +20,6 @@ const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
         setLimit(event.target.value);
     };
     
-
     return (
         <Grid item xs={12} style={{marginBottom: 40}}>
           <p style={{fontSize: '24px', fontWeight: 'lighter'}}>El que quiere Pokemon, que los busque.</p>
@@ -42,13 +32,8 @@ const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
               label='Ingrese el nombre a buscar'
               onChange={handleChangeInput}
               />
-              <Button variant="contained" color="primary" onClick={onSearch} style={{width: '20%'}}>
-                Search
-              </Button>
-          </Grid>
-          
-          <FormControl variant="outlined"  size='small' style={{marginLeft: 50, marginTop: 10}}>
-          <label>Size:</label>
+            <FormControl variant="outlined"  size='small'>
+              
               <Select
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
@@ -66,6 +51,9 @@ const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
                 <MenuItem value={count}>All</MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          
+          
         </Grid>
     )
 
