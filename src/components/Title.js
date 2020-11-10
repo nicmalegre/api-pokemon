@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 
-import src from '../static/img/nicolasalegre.jpg'
+import src from '../assets/img/nicolasalegre.jpg'
 
 
 
@@ -45,8 +45,8 @@ const Title = () => {
                 </Typography>
                 
                 <div>
-                    <a><b>Author:</b></a><br/>
-                    <a id='a-name'>Nicolás Alegre</a><br/>
+                    <label><b>Author:</b></label><br/>
+                    <label id='a-name'>Nicolás Alegre</label><br/>
                     <a id='a-href' href='https://github.com/nicmalegre/api-pokemon'>Link to GitHub</a>
                 </div>
                 <div className={classes.avatar}>
