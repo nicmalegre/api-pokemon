@@ -1,13 +1,13 @@
 import React, {useState} from 'react'; //Import the hook
-import {Title, Search, PokemonCard, Loading, Error} from '../components'
+import {Title, Search, PokemonCard, Loading, Error, PaginationComponent} from '../components'
 
 //For the GET to the API
-import axios from 'axios'
 import {useQuery} from 'react-query'
 
 /* IMPORT FROM MATERIAL-UI */
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button'
 
 //Import getAllPokemons method from api folder
 const {getAllPokemons} = require('../api/pokemonApi')
@@ -18,6 +18,8 @@ export const  Landing = () => {
   const [isError, setIsError] = useState(false) //State for save if we have an error
   const [count, setCount] = useState(0) //State for save the total numbers of pokemons in the api
   const [limit, setLimit] = useState(50) //State for save the limit of the results that we have to show
+  const [end, setEnd] = useState(limit)
+  const [allResultsPokemon, setAllResultsPokemon] = useState([])
 
   //Function to filter the names of the pokemons
   const controlNamePokemon = (pokemon) =>{
@@ -31,28 +33,42 @@ export const  Landing = () => {
       setCount(data.count)
     }
 
-    if(search !== ""){ //If the input is empty, we have to search in all the api
+    if(search !== ""){ 
       arrayResults = data.results.filter(controlNamePokemon) //If not empty, we apply the filter
     }
 
+
+   
+
     if (arrayResults.length > limit){ //If we have more result than the limit, just slice 
-      arrayResults = arrayResults.slice(0,limit)
+      setPokemon(() => arrayResults.slice(0,limit)) //Show only 200 pokemons 
+    }else{
+      setPokemon(arrayResults)
     }
 
-    //When we find all names that matches, we GET the detail data from every pokemon
+    setAllResultsPokemon(arrayResults) //Save all the results 
+
+    
+    /* //When we find all names that matches, we GET the detail data from every pokemon
     const pokemonData = await Promise.all(arrayResults.map( async p =>{
         const pokemonRecord = await axios.get(p.url);
         return pokemonRecord
-    }))
+    })) */
 
-    setPokemon(pokemonData)
+    /* setPokemon(pokemonData) */
   }
-
+    
   const onError = (error) =>{
     setIsError(true)
   }
+
   const {isLoading, refetch} = useQuery(['getAllPokemons', count, search, limit], getAllPokemons, {onSuccess, onError}) //Use react-query for get all the pokemons
 
+  const onViewMore = () =>{
+    setLimit(limit+50)
+    setEnd(end+50)
+    setPokemon(allResultsPokemon.slice(0,end))    
+  }
 
   return (
     <>
@@ -71,9 +87,18 @@ export const  Landing = () => {
         {(Object.keys(pokemon).length === 0) ? (
           <p style={{fontWeight: 'light'}}>No se han encontrado resultados con coincidan con su busqueda.</p>
         ):(
-          pokemon.map( (p,index) => (
-            <PokemonCard key={index} pokemon={p}/>
-          ))
+          <>
+          {pokemon.map(({name, url},index) => (
+            <PokemonCard key={name} url={url}/>
+          ))}
+          {(limit >= 200) && (
+            <Grid container justify="center">
+              <Grid container justify="center" style={{marginTop:20, marginBottom:20}}>
+                <Button onClick={onViewMore} variant="contained" >Ver Más ...</Button>
+              </Grid>
+            </Grid>          
+          )}
+          </>
         )}
       </Grid>
     </Container>
