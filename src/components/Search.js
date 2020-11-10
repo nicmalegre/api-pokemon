@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 const {getAllPokemons} = require('../api/pokemonApi')
 
 
-const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
+const Search = ({limit, count, setLoading, setLimit, setPokemon, setIsError}) => {
     const [search, setSearch] = useState(null) //State for save the user input
 
 
@@ -59,7 +59,10 @@ const Search = ({limit, count, setLoading, setLimit, setPokemon}) => {
                 return p
             }))
         }
-        
+
+        if(status === 'error'){
+            setIsError(true)
+        } 
     }
 
     return (

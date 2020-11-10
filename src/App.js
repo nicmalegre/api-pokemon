@@ -3,6 +3,7 @@ import Title from './components/Title'
 import Search from './components/Search'
 import PokemonCard from './components/PokemonCard'
 import Loading from './components/Loading'
+import Error from './components/Error'
 
 import axios from 'axios' //Import axios for GET the data from the API
 
@@ -10,23 +11,14 @@ import axios from 'axios' //Import axios for GET the data from the API
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-
-
-
-
 
 
 
 
 function App() {
   const [pokemon, setPokemon] = useState([]) //State for save all the information for every pokemon
+
+  const [isError, setIsError] = useState([false])
   
 
   const [count, setCount] = useState(0)
@@ -71,14 +63,7 @@ function App() {
     getAllPokemon()
   }, [])
 
-  
 
-  
-
-  
-  
-
-  
 
 
   return (
@@ -97,6 +82,7 @@ function App() {
         count={count} 
         setLoading={setLoading}
         setPokemon={setPokemon}
+        isError={isError}
         />
 
         {pokemon.map( (p,index) => (
