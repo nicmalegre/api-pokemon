@@ -17,15 +17,8 @@ const {getAllPokemons} = require('../api/pokemonApi')
 
 
 
-const Search = ({limit, count, setLoading, setLimit, setPokemon, setIsError}) => {
-    const [search, setSearch] = useState(null) //State for save the search user input
-    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //Use react-query for get all the pokemons
-
-    //Function to filter the names of the pokemons
-    const controlNamePokemon = (pokemon) =>{
-        return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
-    }
-
+const Search = ({limit, count,setLimit, onSearch, setSearch}) => {
+    
     //Save the input state in the search state
     const handleChangeInput = (event) =>{
         setSearch(event.target.value)
@@ -36,36 +29,6 @@ const Search = ({limit, count, setLoading, setLimit, setPokemon, setIsError}) =>
         setLimit(event.target.value);
     };
     
-    /* FUNCTION FOR SEARCH POKEMONS */
-    let arrayResults = []
-    const filterItems = async () =>{
-        if(status ==="success"){
-            if((search === "")||(search === null)){ //If the input is empty, we have to search in all the api
-                arrayResults = data.results
-            }else{
-                arrayResults = data.results.filter(controlNamePokemon) //If not empty, we apply the filter
-            }
-
-            if (arrayResults.length > limit){ //If we have more result than the limit, just slice 
-                arrayResults = arrayResults.slice(0,limit)
-                console.log(arrayResults)
-            }
-
-            //When we find all names that matches, we GET the detail data from every pokemon
-            let pokemonData = await Promise.all(arrayResults.map( async p =>{
-                let pokemonRecord = await axios.get(p.url);
-                return pokemonRecord
-            }))
-            
-            setPokemon(pokemonData.map( p => {
-                return p
-            }))
-        }
-
-        if(status === 'error'){
-            setIsError(true)
-        } 
-    }
 
     return (
         <Grid item xs={12} style={{marginBottom: 40}}>
@@ -79,7 +42,7 @@ const Search = ({limit, count, setLoading, setLimit, setPokemon, setIsError}) =>
               label='Ingrese el nombre a buscar'
               onChange={handleChangeInput}
               />
-              <Button variant="contained" color="primary" onClick={filterItems} style={{width: '20%'}}>
+              <Button variant="contained" color="primary" onClick={onSearch} style={{width: '20%'}}>
                 Search
               </Button>
           </Grid>
