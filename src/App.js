@@ -3,7 +3,6 @@ import Title from './components/Title'
 import Search from './components/Search'
 import PokemonCard from './components/PokemonCard'
 import Loading from './components/Loading'
-import Error from './components/Error'
 
 import axios from 'axios' //Import axios for GET the data from the API
 
@@ -12,28 +11,16 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 
-
-
-
-function App() {
+const  App = () => {
   const [pokemon, setPokemon] = useState([]) //State for save all the information for every pokemon
-
-  const [isError, setIsError] = useState([false])
+  const [isError, setIsError] = useState([false]) //State for save if we have an error
+  const [loading, setLoading] = useState(false) //State for save if the GET is loading
+  const [count, setCount] = useState(0) //State for save the total numbers of pokemons in the api
+  const [limit, setLimit] = useState(50) //State for save the limit of the results that we have to show
   
 
-  const [count, setCount] = useState(0)
-
-  const [loading, setLoading] = useState(false)
-
-  const [limit, setLimit] = useState(50)
-
-  const getPokemon = (pokemonUrl) => {
-    return axios.get(pokemonUrl)
-  }
-
-  
-
-  useEffect(() => {
+  //For GET all the pokemons the first time
+  useEffect(() => { 
     const getAllPokemon = async () =>{
       setLoading(true)
   
@@ -47,7 +34,7 @@ function App() {
       setCount(data.count)
   
       let pokemonData = await Promise.all(data.results.map( async p =>{
-        let pokemonRecord = await getPokemon(p.url);
+        let pokemonRecord = await axios.get(p.url);
         return pokemonRecord
       }))
       
@@ -63,18 +50,11 @@ function App() {
     getAllPokemon()
   }, [])
 
-
-
-
   return (
     <>
     <Title />
     <Container style={{marginTop: 10}}>
       <Loading loading={loading}/>
-      
-
-      
-
       <Grid container justify="center">
         <Search 
         limit={limit} 
@@ -84,7 +64,6 @@ function App() {
         setPokemon={setPokemon}
         isError={isError}
         />
-
         {pokemon.map( (p,index) => (
           <PokemonCard key={index} pokemon={p}/>
         ))}

@@ -11,45 +11,47 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+//Import getAllPokemons method from api
 const {getAllPokemons} = require('../api/pokemonApi')
 
 
+
+
 const Search = ({limit, count, setLoading, setLimit, setPokemon, setIsError}) => {
-    const [search, setSearch] = useState(null) //State for save the user input
+    const [search, setSearch] = useState(null) //State for save the search user input
+    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //Use react-query for get all the pokemons
 
-
-    const {data, status} = useQuery(['getAllPokemons', count], getAllPokemons) //GET ALL THE POKEMONS
-
-    
-
-
+    //Function to filter the names of the pokemons
     const controlNamePokemon = (pokemon) =>{
         return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
     }
-    
+
+    //Save the input state in the search state
     const handleChangeInput = (event) =>{
         setSearch(event.target.value)
     }
 
+    //When the select change, we save the new limit
     const handleChangeSelect = (event) => {
         setLimit(event.target.value);
-        /* filterItems() */
     };
     
+    /* FUNCTION FOR SEARCH POKEMONS */
     let arrayResults = []
     const filterItems = async () =>{
         if(status ==="success"){
-            if((search === "")||(search === null)){
+            if((search === "")||(search === null)){ //If the input is empty, we have to search in all the api
                 arrayResults = data.results
             }else{
-                arrayResults = data.results.filter(controlNamePokemon)
+                arrayResults = data.results.filter(controlNamePokemon) //If not empty, we apply the filter
             }
 
-            if (arrayResults.length > limit){
+            if (arrayResults.length > limit){ //If we have more result than the limit, just slice 
                 arrayResults = arrayResults.slice(0,limit)
                 console.log(arrayResults)
             }
 
+            //When we find all names that matches, we GET the detail data from every pokemon
             let pokemonData = await Promise.all(arrayResults.map( async p =>{
                 let pokemonRecord = await axios.get(p.url);
                 return pokemonRecord
