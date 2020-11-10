@@ -5,6 +5,7 @@
 React project that allows the user to search for pokemons found in the following API: https://pokeapi.co/
 
 If you want to see the result, you can go to: https://nicmalegre.github.io/api-pokemon/
+Also is avaliable on: https://react-api-poke.herokuapp.com/
 
 **Technologies and libraries:**
 
