@@ -1,5 +1,5 @@
 import React, {useState} from 'react'; //Import the hook
-import {Title, Search, PokemonCard, Loading, Error, PaginationComponent} from '../components'
+import {Title, Search, PokemonCard, Loading, Error} from '../components'
 
 //For the GET to the API
 import {useQuery} from 'react-query'
@@ -47,15 +47,6 @@ export const  Landing = () => {
     }
 
     setAllResultsPokemon(arrayResults) //Save all the results 
-
-    
-    /* //When we find all names that matches, we GET the detail data from every pokemon
-    const pokemonData = await Promise.all(arrayResults.map( async p =>{
-        const pokemonRecord = await axios.get(p.url);
-        return pokemonRecord
-    })) */
-
-    /* setPokemon(pokemonData) */
   }
     
   const onError = (error) =>{
