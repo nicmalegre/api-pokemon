@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react'; //Import the hook
+import React, {useState} from 'react'; //Import the hook
 import Title from './components/Title'
 import Search from './components/Search'
 import PokemonCard from './components/PokemonCard'
 import Loading from './components/Loading'
+import Error from './components/Error'
 
 import axios from 'axios' //Import axios for GET the data from the API
 
@@ -21,8 +22,7 @@ const {getAllPokemons} = require('./api/pokemonApi')
 const  App = () => {
   const [search, setSearch] = useState('') //State for save the search user input
   const [pokemon, setPokemon] = useState([]) //State for save all the information for every pokemon
-  const [isError, setIsError] = useState([false]) //State for save if we have an error
-  const [loading, setLoading] = useState(false) //State for save if the GET is loading
+  const [isError, setIsError] = useState(false) //State for save if we have an error
   const [count, setCount] = useState(0) //State for save the total numbers of pokemons in the api
   const [limit, setLimit] = useState(50) //State for save the limit of the results that we have to show
 
@@ -31,6 +31,7 @@ const  App = () => {
     return ((pokemon.name).toLowerCase().indexOf(search.toLowerCase()) > -1 )
 }
 
+  //Function for GET the information detail from every pokemon
   const onSuccess = async (data) => {
     let arrayResults = data.results
     if(count !== data.count){
@@ -42,7 +43,7 @@ const  App = () => {
     }
 
     if (arrayResults.length > limit){ //If we have more result than the limit, just slice 
-        arrayResults = arrayResults.slice(0,limit)
+      arrayResults = arrayResults.slice(0,limit)
     }
 
     //When we find all names that matches, we GET the detail data from every pokemon
@@ -52,23 +53,19 @@ const  App = () => {
     }))
 
     setPokemon(pokemonData)
-    
-
-    if(status === 'error'){
-      setIsError(true)
-    } 
   }
 
   const onError = (error) =>{
-    console.log(error)
+    setIsError(true)
   }
-  const {status, isLoading, refetch} = useQuery(['getAllPokemons', count, search, limit], getAllPokemons, {onSuccess, onError}) //Use react-query for get all the pokemons
+  const {isLoading, refetch} = useQuery(['getAllPokemons', count, search, limit], getAllPokemons, {onSuccess, onError}) //Use react-query for get all the pokemons
 
 
   return (
     <>
     <Title />
     <Container style={{marginTop: 10}}>
+      <Error isError={isError} />
       <Loading loading={isLoading}/>
       <Grid container justify="center">
         <Search 
@@ -78,9 +75,13 @@ const  App = () => {
         onSearch={refetch}
         setSearch={setSearch}
         />
-        {pokemon.map( (p,index) => (
-          <PokemonCard key={index} pokemon={p}/>
-        ))}
+        {(Object.keys(pokemon).length === 0) ? (
+          <p style={{fontWeight: 'light'}}>No se han encontrado resultados con coincidan con su busqueda.</p>
+        ):(
+          pokemon.map( (p,index) => (
+            <PokemonCard key={index} pokemon={p}/>
+          ))
+        )}
       </Grid>
     </Container>
     </>
