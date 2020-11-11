@@ -7,8 +7,6 @@ import Avatar from '@material-ui/core/Avatar';
 
 import src from '../assets/img/nicolasalegre.jpg'
 
-
-
 //ESTO SE UTILIZA PARA DARLE ESTILO A LA NAVBAR
 const useStyles = makeStyles((theme) => ({
     root: {
