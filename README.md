@@ -12,8 +12,9 @@ Also is avaliable on: https://react-api-poke.herokuapp.com/
 - React
 - React-router-dom
 - react-query
-- axios
 - Material-UI
+- Jest
+- Enzyme
 
 ## File structure
 
@@ -23,6 +24,7 @@ I didn't use a particular file structure, but it’s similar to the one mentione
 - assets
 - components
 - pages
+- test
 
 ## What commands did I run to create this project?
 
@@ -30,11 +32,12 @@ If you want to start this project from scratch, first, make sure you have instal
 
 - npx create react-app .
 - npm install
-- npm i axios
 - npm install @material-ui/core
 - npm install @material-ui/lab
 - npm i react-query
 - npm install react-router-dom
+- npm install --save-dev jest
+- npm install --save-dev enzyme enzyme-adapter-react-16 react-test-renderer
 
 ## How to run the project locally?
 
@@ -90,9 +93,9 @@ Requirements:
 - “predeploy”: “npm run build”,
 - “deploy”: “gh-pages -d build”,
 
-5. Finally, when the project is ready to deploy, run:
+5. Now, everty time you want to deploy to gh-pages, just run:
    > npm run deploy
 
 ## How to run the tests?
 
-... Working on it
+> npm run test
